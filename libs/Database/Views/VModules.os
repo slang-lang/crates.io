@@ -5,8 +5,11 @@ public object VModulesRecord {
    public string Added;
    public string Architecture;
    public string Description;
+   public int Downloads;
+   public string Keywords;
    public string LastUpdate;
    public string Name;
+   public string Repository;
    public string Version;
 
     public void Constructor( int databaseHandle ) {
@@ -39,8 +42,11 @@ public object VModulesRecord {
        Added = cast<string>( mysql_get_field_value( result, "added" ) );
        Architecture = cast<string>( mysql_get_field_value( result, "architecture" ) );
        Description = cast<string>( mysql_get_field_value( result, "description" ) );
+       Downloads = cast<int>( mysql_get_field_value( result, "downloads" ) );
+       Keywords = cast<string>( mysql_get_field_value( result, "keywords" ) );
        LastUpdate = cast<string>( mysql_get_field_value( result, "last_update" ) );
        Name = cast<string>( mysql_get_field_value( result, "name" ) );
+       Repository = cast<string>( mysql_get_field_value( result, "repository" ) );
        Version = cast<string>( mysql_get_field_value( result, "version" ) );
     }
 
@@ -48,13 +54,16 @@ public object VModulesRecord {
        Added = cast<string>( mysql_get_field_value( result, "added" ) );
        Architecture = cast<string>( mysql_get_field_value( result, "architecture" ) );
        Description = cast<string>( mysql_get_field_value( result, "description" ) );
+       Downloads = cast<int>( mysql_get_field_value( result, "downloads" ) );
+       Keywords = cast<string>( mysql_get_field_value( result, "keywords" ) );
        LastUpdate = cast<string>( mysql_get_field_value( result, "last_update" ) );
        Name = cast<string>( mysql_get_field_value( result, "name" ) );
+       Repository = cast<string>( mysql_get_field_value( result, "repository" ) );
        Version = cast<string>( mysql_get_field_value( result, "version" ) );
     }
 
     public string =operator( string ) const {
-        return "VModulesRecord { NULLIF('" + Added + "', ''), '" + Architecture + "', '" + Description + "', NULLIF('" + LastUpdate + "', ''), '" + Name + "', '" + Version + "' }";
+        return "VModulesRecord { NULLIF('" + Added + "', ''), '" + Architecture + "', '" + Description + "', '" + Downloads + "', '" + Keywords + "', NULLIF('" + LastUpdate + "', ''), '" + Name + "', '" + Repository + "', '" + Version + "' }";
     }
 
     private int DB const;
