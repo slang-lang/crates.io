@@ -1,7 +1,7 @@
 
 import System.Collections.Vector;
 
-public object TModulesRecord {
+public object VModulesRecord {
    public string Added;
    public string Architecture;
    public string Description;
@@ -23,33 +23,6 @@ public object TModulesRecord {
         DB = databaseHandle;
 
         loadByResult( result );
-    }
-
-    public void insert() modify throws {
-        var query = "INSERT INTO modules ( `added`, `architecture`, `description`, `last_update`, `name`, `version` ) VALUES ( NULLIF('" + Added + "', ''), '" + Architecture + "', '" + Description + "', NULLIF('" + LastUpdate + "', ''), '" + Name + "', '" + Version + "' )";
-
-        var error = mysql_query( DB, query );
-        if ( error ) {
-            throw mysql_error( DB );
-        }
-    }
-
-    public void insertIgnore() modify throws {
-        var query = "INSERT IGNORE INTO modules ( `added`, `architecture`, `description`, `last_update`, `name`, `version` ) VALUES ( NULLIF('" + Added + "', ''), '" + Architecture + "', '" + Description + "', NULLIF('" + LastUpdate + "', ''), '" + Name + "', '" + Version + "' )";
-
-        var error = mysql_query( DB, query );
-        if ( error ) {
-            throw mysql_error( DB );
-        }
-    }
-
-    public void insertOrUpdate() modify throws {
-        var query = "INSERT INTO modules ( `added`, `architecture`, `description`, `last_update`, `name`, `version` ) VALUES ( NULLIF('" + Added + "', ''), '" + Architecture + "', '" + Description + "', NULLIF('" + LastUpdate + "', ''), '" + Name + "', '" + Version + "' ) ON DUPLICATE KEY UPDATE `added` = NULLIF('" + Added + "', ''), `architecture` = '" + Architecture + "', `description` = '" + Description + "', `last_update` = NULLIF('" + LastUpdate + "', ''), `name` = '" + Name + "', `version` = '" + Version + "'";
-
-        var error = mysql_query( DB, query );
-        if ( error ) {
-            throw mysql_error( DB );
-        }
     }
 
     public void loadByQuery( string query ) modify throws {
@@ -81,16 +54,16 @@ public object TModulesRecord {
     }
 
     public string =operator( string ) const {
-        return "TModulesRecord { NULLIF('" + Added + "', ''), '" + Architecture + "', '" + Description + "', NULLIF('" + LastUpdate + "', ''), '" + Name + "', '" + Version + "' }";
+        return "VModulesRecord { NULLIF('" + Added + "', ''), '" + Architecture + "', '" + Description + "', NULLIF('" + LastUpdate + "', ''), '" + Name + "', '" + Version + "' }";
     }
 
     private int DB const;
 }
 
 
-public object TModulesCollection implements ICollection /*<TModulesRecord>*/ {
+public object VModulesCollection implements ICollection /*<VModulesRecord>*/ {
     public void Constructor( int databaseHandle, string query = "" ) {
-        Collection = new Vector<TModulesRecord>();
+        Collection = new Vector<VModulesRecord>();
         DB = databaseHandle;
 
         if ( query ) {
@@ -98,7 +71,7 @@ public object TModulesCollection implements ICollection /*<TModulesRecord>*/ {
         }
     }
 
-    public TModulesRecord at( int index ) const throws {
+    public VModulesRecord at( int index ) const throws {
         return Collection.at( index );
     }
 
@@ -106,15 +79,15 @@ public object TModulesCollection implements ICollection /*<TModulesRecord>*/ {
         return Collection.empty();
     }
 
-    public TModulesRecord first() const {
+    public VModulesRecord first() const {
         return Collection.first();
     }
 
-    public Iterator<TModulesRecord> getIterator() const {
+    public Iterator<VModulesRecord> getIterator() const {
         return Collection.getIterator();
     }
 
-    public TModulesRecord last() const {
+    public VModulesRecord last() const {
         return Collection.last();
     }
 
@@ -128,7 +101,7 @@ public object TModulesCollection implements ICollection /*<TModulesRecord>*/ {
 
         var result = mysql_store_result( DB );
         while ( mysql_fetch_row( result ) ) {
-            var record = new TModulesRecord( DB );
+            var record = new VModulesRecord( DB );
             record.loadByResult( result );
 
             Collection.push_back( record );
@@ -139,7 +112,7 @@ public object TModulesCollection implements ICollection /*<TModulesRecord>*/ {
         Collection.clear();
 
         while ( mysql_fetch_row( result ) ) {
-            var record = new TModulesRecord( DB );
+            var record = new VModulesRecord( DB );
             record.loadByResult( result );
 
             Collection.push_back( record );
@@ -158,11 +131,11 @@ public object TModulesCollection implements ICollection /*<TModulesRecord>*/ {
         return Collection.size();
     }
 
-    public void push_back( TModulesRecord item ) modify {
+    public void push_back( VModulesRecord item ) modify {
         Collection.push_back( item );
     }
 
-    private Vector<TModulesRecord> Collection;
+    private Vector<VModulesRecord> Collection;
     private int DB const;
 }
 
