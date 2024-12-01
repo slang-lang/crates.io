@@ -37,7 +37,7 @@ private void retrieveAllModules( int page, int perPage ) throws
             Json.AddElement( "default_version", record.Version );
             Json.AddElement( "description", record.Description );
             Json.AddElement( "documentation", "null" );
-            Json.AddElement( "downloads", "0" );
+            Json.AddElement( "downloads", record.Downloads );
             Json.AddElement( "exact_match", "false" );
             Json.AddElement( "homepage", "https://slang-lang.org" );
             Json.AddElement( "id", record.Name );
@@ -46,8 +46,8 @@ private void retrieveAllModules( int page, int perPage ) throws
             Json.AddElement( "max_version", record.Version );
             Json.AddElement( "name", record.Name );
             Json.AddElement( "newest_version", record.Version );
-            Json.AddElement( "recent_downloads", "0" );
-            Json.AddElement( "repository", "null" );
+            Json.AddElement( "recent_downloads", record.Downloads );
+            Json.AddElement( "repository", record.Repository );
             Json.AddElement( "updated_at", record.LastUpdate );
             Json.AddElement( "versions", record.Version );
             Json.AddElement( "yanked", "false" );
