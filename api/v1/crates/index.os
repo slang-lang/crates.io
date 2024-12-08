@@ -39,7 +39,7 @@ private void retrieveAllModules( int page, int perPage ) throws
             Json.AddElement( "documentation", "null" );
             Json.AddElement( "downloads", record.Downloads );
             Json.AddElement( "exact_match", "false" );
-            Json.AddElement( "homepage", "https://slang-lang.org" );
+            Json.AddElement( "homepage", "https://www.slang-lang.org/" );
             Json.AddElement( "id", record.Name );
             Json.AddElement( "keywords", "null" );
             Json.AddElement( "max_stable_version", record.Version );
