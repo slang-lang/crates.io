@@ -1,0 +1,7 @@
+RewriteEngine On
+
+#RewriteCond %{QUERY_STRING} !(^|&)crate= [NC]
+#RewriteRule ^api/v1/crates/([^/]+)$ /api/v1/crates/?crate=$1 [QSA,L]
+
+RewriteCond %{QUERY_STRING} !(^|&)q= [NC]
+RewriteRule ^api/v1/crates/([^/]+)$ /api/v1/crates/?q=$1 [QSA,L]
