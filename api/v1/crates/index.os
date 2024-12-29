@@ -10,7 +10,7 @@ import libs.MainProcessJsonDB;
 
 public void Process( int, string )
 {
-    var name = API.retrieve( "q", "" );
+    var name = API.retrieve( "crate", "" );
     var page = API.retrieve( "page", 1 );
     var perPage = API.retrieve( "per_page", 10 );
 

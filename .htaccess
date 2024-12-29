@@ -1,7 +1,16 @@
 RewriteEngine On
 
-#RewriteCond %{QUERY_STRING} !(^|&)crate= [NC]
-#RewriteRule ^api/v1/crates/([^/]+)$ /api/v1/crates/?crate=$1 [QSA,L]
+# rewrite api/v1/crates/ to /api/v1/crates/?crate=$1
+RewriteCond %{QUERY_STRING} !(^|&)crate= [NC]
+RewriteRule ^api/v1/crates/([^/]+)$ /api/v1/crates/?crate=$1 [QSA,L]
 
+# rewrite crates/ to /?q=$1
 RewriteCond %{QUERY_STRING} !(^|&)q= [NC]
-RewriteRule ^api/v1/crates/([^/]+)$ /api/v1/crates/?q=$1 [QSA,L]
+RewriteRule ^crates/([^/]+)$ /?q=$1 [QSA,L]
+
+# Match URLs in the form /api/v1/crates/<crate-name>/versions
+RewriteRule ^api/v1/crates/([^/]+)/versions$ /api/v1/crates/?crate=$1&versions [QSA,L]
+
+# rewrite /crates/assets/ to /assets/
+RewriteCond %{QUERY_STRING} !crates/assets/ [NC]
+RewriteRule ^crates/assets/([^/]+)$ /assets/$1 [QSA,L]
