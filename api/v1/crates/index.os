@@ -4,6 +4,7 @@
 
 // project imports
 import libs.API.Utils;
+import libs.Consts.Pagination;
 import libs.Database.Tables.Modules;
 import libs.MainProcessJsonDB;
 
@@ -12,7 +13,7 @@ public void Process( int, string )
 {
     var name    = API.retrieve( "crate", "" );
     var page    = API.retrieve( "page", 1 );
-    var perPage = API.retrieve( "per_page", 10 );
+    var perPage = API.retrieve( "per_page", Consts.NUM_ITEMS_PER_PAGER );
     var query   = API.retrieve( "q", "" );
 
     if ( name ) {
