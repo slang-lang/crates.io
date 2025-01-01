@@ -29,7 +29,7 @@ public void Process( int, string )
 
 private void retrieveAllModules( int page, int perPage ) throws
 {
-    var query = "SELECT * FROM modules GROUP BY name ORDER BY name ASC, version DESC LIMIT " + ( page - 1 ) * perPage + ", " + perPage;
+    var query = "SELECT * FROM v_modules GROUP BY name ORDER BY name ASC, version DESC LIMIT " + ( page - 1 ) * perPage + ", " + perPage;
     // print( query );
     var collection = new TModulesCollection( Database.Handle, query );
 
@@ -47,14 +47,14 @@ private void retrieveSingleModule( string name ) throws
 
 private void searchModule( string name, int page, int perPage ) throws
 {
-    var query = "SELECT * FROM modules WHERE name LIKE '%" + name + "%' GROUP BY name ORDER BY name ASC, version DESC LIMIT " + ( page - 1 ) * perPage + ", " + perPage;
+    var query = "SELECT * FROM v_modules WHERE name LIKE '%" + name + "%' GROUP BY name ORDER BY name ASC, version DESC LIMIT " + ( page - 1 ) * perPage + ", " + perPage;
     // print( query );
     var collection = new TModulesCollection( Database.Handle, query );
 
-    provideModules( collection );
+    provideModules( collection, true );
 }
 
-private void provideModules( TModulesCollection collection ) throws
+private void provideModules( TModulesCollection collection, bool queryVersions = false ) throws
 {
     Json.BeginArray( "crates" );
     foreach ( TModulesRecord record : collection ) {
@@ -78,7 +78,23 @@ private void provideModules( TModulesCollection collection ) throws
             Json.AddElement( "recent_downloads", record.Downloads );
             Json.AddElement( "repository", record.Repository );
             Json.AddElement( "updated_at", record.LastUpdate );
-            Json.AddElement( "versions", record.Version );
+
+            if ( queryVersions ) {
+                var query = "SELECT version FROM modules WHERE name = '" + record.Name + "' ORDER BY version DESC";
+
+                var error = mysql_query( Database.Handle, query );
+                if ( !error ) {
+                    Json.BeginArray( "versions" );
+
+                    var result = mysql_store_result( Database.Handle );
+                    while ( mysql_fetch_row( result ) ) {
+                        Json.AddValue( mysql_get_field_value( result, "version" ) );
+                    }
+
+                    Json.EndArray();
+                }
+            }
+
             Json.AddElement( "yanked", "false" );
         Json.EndObject();
     }
